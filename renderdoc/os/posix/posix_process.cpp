@@ -90,6 +90,7 @@ static void ZombieWaiter(int signum, siginfo_t *handler_info, void *handler_cont
 
 static void SetupZombieCollectionHandler()
 {
+#if DISABLED(RDOC_ANDROID)
   SCOPED_LOCK(zombieLock);
 
   static bool installed = false;
@@ -104,6 +105,7 @@ static void SetupZombieCollectionHandler()
   new_action.sa_sigaction = &ZombieWaiter;
 
   sigaction(SIGCHLD, &new_action, &old_action);
+#endif
 }
 
 namespace FileIO
